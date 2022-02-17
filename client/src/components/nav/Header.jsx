@@ -7,6 +7,7 @@ import {
   SettingOutlined,
   UserOutlined,
   UserAddOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons"
 
 import { Link } from "react-router-dom"
@@ -56,7 +57,7 @@ const Header = () => {
         <SubMenu key="SubMenu" icon={<SettingOutlined />} title="Username">
           <Item key="setting:1">Option 1 </Item>
           <Item key="setting:2">Option 2</Item>
-          <Item key="logout" icon={<UserOutlined />} onClick={logout}>
+          <Item key="logout" icon={<LogoutOutlined />} onClick={logout}>
             Logout
           </Item>
         </SubMenu>
