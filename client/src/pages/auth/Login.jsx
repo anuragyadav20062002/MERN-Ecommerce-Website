@@ -33,6 +33,7 @@ const Login = ({ history }) => {
       })
 
       history.push("/")
+      toast.success("Successfully Logged in")
     } catch (error) {
       console.log(error)
       toast.error(error.message)
