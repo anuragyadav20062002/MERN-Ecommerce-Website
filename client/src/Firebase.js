@@ -1,7 +1,9 @@
 /* eslint-disable no-unused-vars */
 // Your web app's Firebase configuration
 
-import * as firebase from "firebase"
+import firebase from "firebase/compat/app"
+import "firebase/compat/auth"
+import "firebase/compat/firestore"
 
 const firebaseConfig = {
   apiKey: "AIzaSyBzdzR7WZ-pRZpz_TYBFZmLfTYzTsXNiTE",
@@ -15,6 +17,8 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig)
 
-export const auth = firebase.auth()
+const auth = firebase.auth()
 
-export const { googleAuthProvider } = new firebase.auth.googleAuthProvider()
+const Provider = new firebase.auth.GoogleAuthProvider()
+
+export { auth, Provider }

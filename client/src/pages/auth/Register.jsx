@@ -1,10 +1,34 @@
+/* eslint-disable no-unused-vars */
 import React from "react"
 import { useState } from "react"
+import { auth } from "../../Firebase"
+import { toast, ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 const Register = () => {
   const [email, setEmail] = useState("")
 
-  const handleSubmit = () => {}
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    const config = {
+      url: "http://localhost:3000/register/complete",
+      handleCodeInApp: true,
+    }
+
+    await auth.sendSignInLinkToEmail(email, config)
+    toast.success(
+      `Email is sent to ${email}. Click the link to complete registeration`
+    )
+
+    //save user email in local storage
+
+    window.localStorage.setItem("emailForRegistration", email)
+
+    //clear state
+
+    setEmail("")
+  }
 
   const registerForm = () => {
     return (
@@ -30,6 +54,7 @@ const Register = () => {
         <div className="row">
           <div className="col-md-6 offset-md-3">
             <h4>Register</h4>
+            <ToastContainer />
             {registerForm()}
           </div>
         </div>
