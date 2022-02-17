@@ -6,9 +6,9 @@ import { toast } from "react-toastify"
 
 const RegisterComplete = ({ history }) => {
   const [email, setEmail] = useState("")
-  const [passwrd, setPassword] = useState("")
+  const [password, setPassword] = useState("")
 
-  useState(() => {
+  useEffect(() => {
     setEmail(window.localStorage.getItem("emailForRegistration"))
   }, [])
 
@@ -16,6 +16,40 @@ const RegisterComplete = ({ history }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+
+    //validation
+
+    if (!email || !password) {
+      toast.error("Email and password required")
+      return
+    }
+
+    if (password.length < 6) {
+      toast.error("Password length should be more than 6 characters")
+      return
+    }
+    try {
+      const result = await auth.signInWithEmailLink(email, window.location.href)
+      if (result.user.emailVerified) {
+        //removing user email from loca storage
+
+        window.localStorage.removeItem("emailForRegistration")
+
+        //get user id token
+
+        let user = auth.currentUser
+        await user.updatePassword(password)
+        const idTokenResult = await user.getIdTokenResult()
+
+        //redux store
+        console.log("user", user, idTokenResult)
+        //redirect
+        // history.push("/")
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error(error.message)
+    }
   }
 
   const completeRegisterationForm = () => {
@@ -31,7 +65,7 @@ const RegisterComplete = ({ history }) => {
         <input
           type="password"
           className="form-control"
-          value={passwrd}
+          value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Enter Password"
           autoFocus
