@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from "react"
 import { Switch, Route } from "react-router-dom"
 import Login from "./pages/auth/Login"
@@ -5,11 +6,14 @@ import Register from "./pages/auth/Register"
 import Home from "./pages/Home"
 import Header from "./components/nav/Header"
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css"
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 const App = () => {
   return (
     <>
       <Header />
+      <ToastContainer />
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/login" component={Login} />
