@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React from "react"
 import { useState, useEffect } from "react"
@@ -8,6 +9,13 @@ import { useSelector } from "react-redux"
 const Forgot = ({ history }) => {
   const [email, setEmail] = useState("")
   const [loading, setLoading] = useState(false)
+  const { user } = useSelector((state) => ({ ...state }))
+
+  useEffect(() => {
+    if (user && user.token) {
+      history.push("/")
+    }
+  }, [user])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
