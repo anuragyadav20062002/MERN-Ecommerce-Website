@@ -68,6 +68,8 @@ const Login = ({ history }) => {
     }
   }
 
+  //login form
+
   const loginForm = () => {
     return (
       <form action="" onSubmit={handleSubmit}>
@@ -118,6 +120,8 @@ const Login = ({ history }) => {
             <br />
 
             {loginForm()}
+
+            {/* //google button here because its not a part of login form */}
 
             <Button
               onClick={googleLogin}
