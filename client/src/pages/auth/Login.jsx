@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
 import React from "react"
 import { useState } from "react"
-import { auth } from "../../Firebase"
+import { auth, Provider } from "../../Firebase"
 import { toast } from "react-toastify"
 import { Button } from "antd"
-import { MailOutlined } from "@ant-design/icons"
+import { MailOutlined, GoogleOutlined } from "@ant-design/icons"
 import { useDispatch } from "react-redux"
 
 const Login = ({ history }) => {
@@ -12,6 +12,33 @@ const Login = ({ history }) => {
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState("")
   let dispatch = useDispatch(false)
+
+  //google login
+
+  const googleLogin = async () => {
+    auth
+      .signInWithPopup(Provider)
+      .then(async (result) => {
+        const { user } = result
+        const idTokenResult = user.getIdTokenResult()
+
+        dispatch({
+          type: "LOGGED_IN_USER",
+          payload: {
+            email: user.email,
+            token: idTokenResult.token,
+          },
+        })
+        history.push("/")
+        toast.success("Successfully Logged in")
+      })
+      .catch((error) => {
+        console.log(error)
+        toast.error(error.message)
+      })
+  }
+
+  //email login
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -83,9 +110,26 @@ const Login = ({ history }) => {
       <div className="container p-5">
         <div className="row">
           <div className="col-md-6 offset-md-3">
-            <h4>Login</h4>
+            {loading ? (
+              <h4 className="text-danger">Loading...</h4>
+            ) : (
+              <h4 className="text-primary">Login</h4>
+            )}
+            <br />
 
             {loginForm()}
+
+            <Button
+              onClick={googleLogin}
+              type="danger"
+              className="mb-3"
+              block
+              shape="round"
+              icon={<GoogleOutlined />}
+              size="large"
+            >
+              Login with Google
+            </Button>
           </div>
         </div>
       </div>
