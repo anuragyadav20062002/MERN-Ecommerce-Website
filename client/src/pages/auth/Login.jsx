@@ -1,17 +1,26 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React from "react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { auth, Provider } from "../../Firebase"
 import { toast } from "react-toastify"
 import { Button } from "antd"
 import { MailOutlined, GoogleOutlined } from "@ant-design/icons"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 
 const Login = ({ history }) => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState("")
+
+  const { user } = useSelector((state) => ({ ...state }))
+
+  useEffect(() => {
+    if (user && user.token) {
+      history.push("/")
+    }
+  }, [user])
   let dispatch = useDispatch(false)
 
   //google login

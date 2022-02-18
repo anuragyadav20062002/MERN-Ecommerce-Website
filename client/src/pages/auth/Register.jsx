@@ -1,11 +1,20 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React from "react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import { auth } from "../../Firebase"
 import { toast } from "react-toastify"
 
-const Register = () => {
+const Register = ({ history }) => {
   const [email, setEmail] = useState("")
+  const { user } = useSelector((state) => ({ ...state }))
+
+  useEffect(() => {
+    if (user && user.token) {
+      history.push("/")
+    }
+  }, [user])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
