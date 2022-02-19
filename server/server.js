@@ -4,10 +4,7 @@ const morgan = require("morgan")
 const bodyParser = require("body-parser")
 const cors = require("cors")
 require("dotenv").config()
-
-//import routes
-
-const authRoutes = require("./routes/auth")
+const fs = require("fs")
 
 //app
 
@@ -32,12 +29,12 @@ app.use(bodyParser.json({ limit: "2mb" }))
 app.use(cors())
 
 //routes middleware
-
-app.use("/api", authRoutes)
+//using file system to read directory of routes and read all routes in it
+fs.readdirSync("./routes").map((r) => app.use("/api", require("./routes/" + r)))
 
 //listen
 
-const port = process.env.PORT
+const port = process.env.PORT || 8000
 
 app.listen(port, () => {
   console.log("Server runnning at port 8000")
