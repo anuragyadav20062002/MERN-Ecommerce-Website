@@ -79,16 +79,16 @@ const Login = ({ history }) => {
         .then((res) => console.log("create or update res", res))
         .catch()
 
-      dispatch({
-        type: "LOGGED_IN_USER",
-        payload: {
-          email: user.email,
-          token: idTokenResult.token,
-        },
-      })
+      // dispatch({
+      //   type: "LOGGED_IN_USER",
+      //   payload: {
+      //     email: user.email,
+      //     token: idTokenResult.token,
+      //   },
+      // })
 
-      history.push("/")
-      toast.success("Successfully Logged in")
+      // history.push("/")
+      // toast.success("Successfully Logged in")
     } catch (error) {
       console.log(error)
       toast.error(error.message)
