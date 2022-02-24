@@ -9,19 +9,7 @@ import { MailOutlined, GoogleOutlined } from "@ant-design/icons"
 import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import axios from "axios"
-
-const createOrUpdateUser = async (authtoken) => {
-  let api = "http://localhost:8000/api/create-or-update-user"
-  return await axios.post(
-    api,
-    {},
-    {
-      headers: {
-        authtoken: authtoken,
-      },
-    }
-  )
-}
+import { createOrUpdateUser } from "../../functions/auth"
 
 const Login = ({ history }) => {
   const [email, setEmail] = useState("")
