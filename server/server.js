@@ -9,6 +9,7 @@ const fs = require("fs")
 //app
 
 const app = express()
+app.use(express.json())
 
 //db
 
